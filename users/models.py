@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager, PermissionsMixin
 
+from articon_api.data import REGIONS
+
 # Create your models here.
 
 USER_ROLE_CHOICES = [
@@ -43,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     registration_number = models.IntegerField(unique=True, null=True)
     role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20, default='client')
+    region = models.CharField(choices=REGIONS, max_length=50, default='Tunis')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
