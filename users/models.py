@@ -35,15 +35,16 @@ class UserManager(BaseUserManager):
         user = self.create_user(username, email, password)
         user.is_superuser = True
         user.is_staff = True
-        user.role = 'PROJECT_MANAGER'
+        user.role = 'admin'
         user.save()
         return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
+    fullname = models.CharField(max_length=255, db_index=True)
     email = models.EmailField(unique=True)
-    registration_number = models.IntegerField(unique=True, null=True)
+    registration = models.TextField(unique=True, null=True)
     role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20, default='client')
     region = models.CharField(choices=REGIONS, max_length=50, default='Tunis')
     is_active = models.BooleanField(default=True)
