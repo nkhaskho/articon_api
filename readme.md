@@ -1,3 +1,9 @@
+## Project setup
+``` shell
+pip install -r requirements.txt
+```
+
+
 ## Run the web API (Web server)
 ``` shell
 python3 manage.py runserver
