@@ -6,7 +6,7 @@ pip install -r requirements.txt
 
 ## Run the web API (Web server)
 ``` shell
-python3 manage.py runserver
+python manage.py runserver
 ```
 Output
 ``` console
@@ -21,14 +21,17 @@ Quit the server with CONTROL-C.
 ```
 
 ## Migrations
+These two commands are mandatory at application startup for the first time <br>
+This should prepare the migrations, and create database tables
 ``` shell
-python3 manage.py makemigrations <Migration_Name>
-python3 manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 ## Create admin account
-Create (add) new superuser
+Create (add) new superuser "Admin"
 ``` bash
-python3 manage.py createsuperuser
+python manage.py createsuperuser
 ```
-You will be prompted to enter the following information: Username, Email, and a Password
+You will be prompted to enter the following information: Username, Email, and a Password <br>
+These credentials will be used later to access the django administration panel
