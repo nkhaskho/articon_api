@@ -60,7 +60,7 @@ class ProductList(generics.ListCreateAPIView):
     """
     queryset = Product.objects.filter()
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('type', 'status')
+    filter_fields = ('category', 'price')
     serializer_class = ProductSerializer
 
 
@@ -110,6 +110,16 @@ class ReviewDetail(APIView):
     Retrieve, update or delete a Review.
     """
     #permission_classes = (IsAuthenticated,)
+    def get_object(self, pk):
+        try:
+            return Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         review = self.get_object(pk)
