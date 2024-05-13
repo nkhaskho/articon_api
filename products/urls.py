@@ -23,10 +23,12 @@ schema_view = get_schema_view(
 urlpatterns = [
    path('doc/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-   path('categories/', views.CategoryList.as_view(), name='categories'),
-   path('categories/<int:pk>/', views.CategoryDetail.as_view()),
    path('', views.ProductList.as_view(), name='categories'),
    path('<int:pk>/', views.ProductDetail.as_view()),
+   path('categories/', views.CategoryList.as_view(), name='categories'),
+   path('categories/<int:pk>/', views.CategoryDetail.as_view()),
+   path('reviews/', views.ReviewList.as_view(), name='reviews'),
+   path('reviews/<int:pk>/', views.ReviewDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
