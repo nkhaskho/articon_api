@@ -1,6 +1,5 @@
-from datetime import datetime
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
 
 from users.models import User 
 
@@ -23,8 +22,8 @@ class Product(models.Model):
     
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     comment = models.TextField(max_length=255, blank=True)
     rating = models.IntegerField(choices=[(i, i) for i in range(0, (5))])
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(default=timezone.now)
