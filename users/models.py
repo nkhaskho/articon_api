@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager, PermissionsMixin
@@ -39,12 +40,24 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
+def validate(registration):
+    match = re.match(r"^[CEGR][0-9]{2}[0-9]{4}", registration)
+    # self.role=='artisan' and ((role is None)
+    if match is None or int(registration[1:3])>24:
+        print("registration error")
+        raise ValidationError(
+            _("%(value)s is not a valid registration number"),
+            params={"value": registration},
+        )
+        
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
     fullname = models.CharField(max_length=255, db_index=True)
     email = models.EmailField(unique=True)
-    registration = models.TextField(unique=True, null=True)
+    registration = models.TextField(unique=True, validators=[validate])
     role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20, default='client')
     region = models.CharField(choices=REGIONS, max_length=50, default='Tunis')
     is_active = models.BooleanField(default=True)
@@ -63,3 +76,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def tokens(self):
         return ''
+    
