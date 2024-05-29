@@ -43,6 +43,14 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
+# email settings
+EMAIL_HOST = "smtp-mail.outlook.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "articonapi@hotmail.com"
+EMAIL_HOST_PASSWORD = "Pass1234--"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50000),
     'UPDATE_LAST_LOGIN': False,

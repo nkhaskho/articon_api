@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from django.http import Http404
+from django.core.mail import send_mail
 
 from .models import User
 from .serializers import UserSerializer
@@ -51,6 +52,6 @@ class UserDetail(APIView):
 
     def delete(self, request, pk, format=None):
         user = self.get_object(pk)
-        user.is_active = False
-        user.save()
+        #user.is_active = False
+        user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

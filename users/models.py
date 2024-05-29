@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager, PermissionsMixin
 
 from articon_api.data import REGIONS
+from articon_api.settings import EMAIL_HOST_USER
 
 # Create your models here.
 
@@ -26,6 +27,13 @@ class UserManager(BaseUserManager):
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
         user.save()
+        send_mail(
+            f"Welcome {user.username}!",
+            f"Hello {user.fullname},\nYou account has been created\nSincerely,",
+            EMAIL_HOST_USER,
+            ["nkhaskho@gmail.com"],
+            fail_silently=False
+        )
         return user
 
     def create_superuser(self, username, email, password=None):
@@ -57,8 +65,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
     fullname = models.CharField(max_length=255, db_index=True)
     email = models.EmailField(unique=True)
-    registration = models.TextField(unique=True, validators=[validate])
     role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20, default='client')
+    registration = models.TextField(unique=True, validators=[validate], blank=(role!='artisan'))
     region = models.CharField(choices=REGIONS, max_length=50, default='Tunis')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
