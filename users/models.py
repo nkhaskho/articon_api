@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
             f"Welcome {user.username}!",
             f"Hello {user.fullname},\nYou account has been created\nSincerely,",
             EMAIL_HOST_USER,
-            ["nkhaskho@gmail.com"],
+            [email],
             fail_silently=False
         )
         return user
