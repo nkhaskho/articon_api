@@ -27,4 +27,5 @@ urlpatterns = [
     path('api/products/', include('products.urls')),
     path('api/events/', include('events.urls')),
     path('api/auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/workshop/', include('workshop.urls')),
 ]
