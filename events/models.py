@@ -16,6 +16,7 @@ class Event(models.Model):
     description = models.TextField(max_length=512)
     date = models.DateTimeField()
     location = models.CharField(max_length=255)
+    video = models.CharField(max_length=255)
 
     def __str__(self) -> str:
         return f'{self.name} [{self.date}]'

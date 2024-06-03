@@ -16,6 +16,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     price = models.FloatField(default=0, null=True)
     quantity = models.IntegerField()
+    image = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
