@@ -81,13 +81,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    
+    'django.contrib.staticfiles',
     # 3rd party apps
-   
+    'corsheaders',
     'drf_yasg',
     'rest_framework',
-    
-  
+    'rest_framework_simplejwt',
+    'django_filters',
     # our apps
     'users',
     'products',
