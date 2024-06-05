@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 # Create your models here.
 
 EVENT_CHOICES = [
@@ -20,3 +22,11 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name} [{self.date}]'
+    
+
+class Participation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'User{self.user} Event{self.date}'

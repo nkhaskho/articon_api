@@ -52,3 +52,43 @@ class EventDetail(APIView):
         event = self.get_object(pk)
         event.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ParticipationList(generics.ListCreateAPIView):
+    """
+    List all event's participation, or create a new participation.
+    """
+    queryset = Participation.objects.filter()
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filter_fields = ('user', 'event')
+    serializer_class = ParticipationSerializer
+
+
+class ParticipationDetail(APIView):
+    """
+    Retrieve, update or delete an Event.
+    """
+    #permission_classes = (IsAuthenticated,)
+    def get_object(self, pk):
+        try:
+            return Participation.objects.get(pk=pk)
+        except Participation.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        participation = self.get_object(pk)
+        serializer = ParticipationSerializer(participation)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        participation = self.get_object(pk)
+        serializer = ParticipationSerializer(participation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        participation = self.get_object(pk)
+        participation.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

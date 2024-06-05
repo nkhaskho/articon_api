@@ -25,6 +25,8 @@ urlpatterns = [
    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
    path('', views.EventList.as_view(), name='events'),
    path('<int:pk>/', views.EventDetail.as_view()),
+   path('participations/', views.ParticipationList.as_view(), name='participations'),
+   path('participations/<int:pk>/', views.ParticipationDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
