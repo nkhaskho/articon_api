@@ -67,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     fullname = models.CharField(max_length=255, db_index=True)
     email = models.EmailField(unique=True)
     role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20, default='client')
-    registration = models.TextField(unique=True, validators=[validate], blank=(role!='artisan'))
+    registration = models.TextField(validators=[validate], blank=(role!='artisan'))
     region = models.CharField(choices=REGIONS, max_length=50, default='Tunis')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
