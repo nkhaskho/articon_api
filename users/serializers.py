@@ -14,5 +14,11 @@ class UserSerializer(serializers.ModelSerializer):
         user.fullname = validated_data['fullname']
         user.role = validated_data['role']
         user.registration = validated_data['registration']
+        user.is_staff = False
+        user.is_superuser = False
+        if 'is_staff' in validated_data.keys():
+            user.is_staff = validated_data['is_staff']
+        if 'is_superuser' in validated_data.keys():
+            user.is_superuser = validated_data['is_superuser']
         user.save()
         return user
