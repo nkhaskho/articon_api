@@ -27,6 +27,7 @@ class UserManager(BaseUserManager):
             raise TypeError("password field is required") #, password=password
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
+        user.role = 'client'
         user.save()
         send_mail(
             f"Welcome {user.username}!",
@@ -66,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
     fullname = models.CharField(max_length=255, db_index=True)
     email = models.EmailField(unique=True)
-    role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20, default='client')
+    role = models.CharField(choices=USER_ROLE_CHOICES, max_length=20)
     registration = models.TextField(validators=[validate], blank=(role!='artisan'))
     region = models.CharField(choices=REGIONS, max_length=50, default='Tunis')
     is_active = models.BooleanField(default=True)
