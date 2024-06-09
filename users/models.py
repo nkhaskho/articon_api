@@ -54,7 +54,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 def validate(registration):
-    match = re.match(r"^[CEGR][0-9]{2}[0-9]{4}", registration)
+    match = re.match(r"^[CEGR][0-9]{2}[0-9]{5}", registration)
     # self.role=='artisan' and ((role is None)
     if match is None or int(registration[1:3])>24:
         print("registration error")
